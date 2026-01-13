@@ -1,16 +1,3 @@
-(function () {
-  // ✅ 1) 여기 HTML 붙여넣기
-  const HTML = `
-  <!-- 여기에 형의 상단 메뉴 HTML 전체 붙여넣기 -->
-  `;
-
-  // ✅ 2) 여기 CSS 붙여넣기 (없으면 비워도 됨)
-  const CSS = `
-  /* 여기에 형의 상단 메뉴 CSS 전체 붙여넣기 */
-  `;
-
-  // ✅ 3) 여기 JS 붙여넣기 (없으면 비워도 됨)
-  const JS = `
 (function(){
   /* =========================
      ✅ PC 전용 가드 (형 원본 의도 유지)
@@ -1966,43 +1953,5 @@ return '<a class="sdmAllA'+hot+'" href="'+it.href+'">'+escapeHtml(it.t)+'</a>';
     doc.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
-  }
-})();
-  
-
-  `;
-
-  // ---- 아래는 건드리지 마 ----
-  function inject() {
-    // 중복 삽입 방지
-    if (document.getElementById("sd-shared-header-root")) return;
-
-    // 1) HTML 삽입
-    const root = document.createElement("div");
-    root.id = "sd-shared-header-root";
-    root.innerHTML = HTML;
-    document.body.insertAdjacentElement("afterbegin", root);
-
-    // 2) CSS 삽입
-    if (CSS && CSS.trim()) {
-      const style = document.createElement("style");
-      style.setAttribute("data-sd-shared", "header");
-      style.textContent = CSS;
-      document.head.appendChild(style);
-    }
-
-    // 3) JS 실행
-    if (JS && JS.trim()) {
-      const script = document.createElement("script");
-      script.setAttribute("data-sd-shared", "header");
-      script.textContent = JS;
-      document.body.appendChild(script);
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", inject);
-  } else {
-    inject();
   }
 })();
