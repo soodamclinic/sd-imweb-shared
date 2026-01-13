@@ -1,41 +1,14 @@
-/* Auto-generated injector from pc_banner.txt
-   Paste this into src/fbp.js (NOT the obfuscated output) then run npm run build.
-*/
+/* =========================================
+   banner(pc).js  (built from pc_banner.txt)
+   - Pure JS (no <style>/<script> tags)
+   - Injects CSS + HTML, then runs original logic
+========================================= */
 (function(){
-  "use strict";
-  if (window.__SD_FBP_INJECTED__) return;
-  window.__SD_FBP_INJECTED__ = true;
+  if (window.__SOODAM_BANNER_PC_LOADED__) return;
+  window.__SOODAM_BANNER_PC_LOADED__ = true;
 
-  function ensureStyle(id, cssText){
-    if (document.getElementById(id)) return;
-    var style = document.createElement("style");
-    style.id = id;
-    style.setAttribute("data-sd-shared","fbp");
-    style.textContent = cssText;
-    document.head.appendChild(style);
-  }
-
-  function ensureRoot(id){
-    var root = document.getElementById(id);
-    if (root) return root;
-    root = document.createElement("div");
-    root.id = id;
-    root.style.display = "none"; // DOM에만 올리고 화면엔 안 보이게
-    document.body.appendChild(root);
-    return root;
-  }
-
-  function runInlineScript(code){
-    if (!code || !code.trim()) return;
-    var s = document.createElement("script");
-    s.setAttribute("data-sd-shared","fbp");
-    s.textContent = code;
-    document.head.appendChild(s);
-  }
-
-  function inject(){
-    ensureStyle("sd-fbp-style", String.raw`
-:root{
+  // 1) Inject CSS
+  var __FBP_CSS__ = `:root{
   --panel:#fff; --line:#E6E1DA; --text:#2A2A2A; --sub:#7a736b; --accent:#5A4633;
   --shadow:0 10px 28px rgba(0,0,0,.16);
 
@@ -1016,12 +989,16 @@ object-fit:contain;
   margin:12px 0;
 }
 .fbpPolicyBody b{ font-weight:900; }
-.fbpPolicyBody .muted{ color:#7a736b; }
+.fbpPolicyBody .muted{ color:#7a736b; }`;
+  if (!document.getElementById('fbp-style')) {
+    var st = document.createElement('style');
+    st.id = 'fbp-style';
+    st.textContent = __FBP_CSS__;
+    document.head.appendChild(st);
+  }
 
-`);
-    var root = ensureRoot("sd-fbp-root");
-    // HTML은 그대로 주입 (원본 구조 유지)
-    root.innerHTML = String.raw`<!-- ✅ 도킹 바 -->
+  // 2) Embedded HTML template (used instead of remote fetch)
+  var __FBP_HTML__ = `<!-- ✅ 도킹 바 -->
 <div id="fbpDockWrap" aria-label="하단 도킹 버튼">
   <div id="fbpDockBar" role="button" tabindex="0" aria-label="문의하기 및 더 알아보기 열기">
     <div class="fbpDockText">문의하기 &amp; 더 알아보기</div>
@@ -1354,8 +1331,9 @@ object-fit:contain;
 
 <!-- 오프스크린 sizer (이전 로직 유지) -->
 <span id="fbpSizer" class="fbp-sizer" aria-hidden="true"></span>`;
-    // JS 실행
-    runInlineScript(String.raw`(function(){
+
+  // 3) Original JS (slightly modified: fetchAndMount() uses __FBP_HTML__)
+(function(){
   // =========================
   // B 방식: 원격 HTML(fbp.html) 자동 주입 + 기존 로직 실행
   // =========================
@@ -1401,16 +1379,11 @@ object-fit:contain;
 
   function fetchAndMount(){
     if(alreadyMounted()) return;
-
-    fetch(HTML_URL, { method:'GET', mode:'cors', credentials:'omit' })
-      .then(function(res){
-        if(!res.ok) throw new Error('HTML fetch 실패: HTTP ' + res.status);
-        return res.text();
-      })
-      .then(injectHTML)
-      .catch(function(err){
-        console.error('[FBP] mount error:', err);
-      });
+    try{
+      injectHTML(__FBP_HTML__);
+    }catch(err){
+      console.error('[FBP] mount error:', err);
+    }
   }
 
   // =========================
@@ -1883,12 +1856,5 @@ if(cancelBtn){
   }else{
     start();
   }
-})();`);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", inject);
-  } else {
-    inject();
-  }
+})();
 })();
