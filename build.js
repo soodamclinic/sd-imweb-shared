@@ -23,12 +23,21 @@ files.forEach(file => {
   const input = fs.readFileSync(srcPath, "utf8");
 
   const output = JavaScriptObfuscator.obfuscate(input, {
-    compact: true,
-    stringArray: true,
-    stringArrayThreshold: 0.75,
-    rotateStringArray: true,
-    disableConsoleOutput: false
-  }).getObfuscatedCode();
+  compact: true,
+
+  stringArray: true,
+  stringArrayThreshold: 0.75,
+  rotateStringArray: true,
+
+  // 🔒 A단계 강화 옵션
+  splitStrings: true,
+  splitStringsChunkLength: 5,
+
+  identifierNamesGenerator: 'hexadecimal',
+  renameGlobals: false,
+
+  disableConsoleOutput: false
+}).getObfuscatedCode();
 
   fs.writeFileSync(outPath, output, "utf8");
   console.log(`✅ build 완료: ${file}`);
