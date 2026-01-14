@@ -4,11 +4,85 @@
    - Injects CSS + HTML, then runs original logic
 ========================================= */
 (function(){
+
+function sdmViewportW(){
+  // ⚠️ imweb/preview에서 window.top.innerWidth가 "데스크톱 폭"으로 잡혀서 모바일에서 오판하는 케이스가 있음
+  // → 무조건 "현재 프레임(현재 페이지) viewport" 기준으로만 판단한다.
+  var w = window.innerWidth || 0;
+  var cw = (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : w;
+  if (cw && w) return Math.min(w, cw);
+  return (cw || w || 0);
+}
+
+function sdmIsTouch(){
+  return (
+    ('ontouchstart' in window) ||
+    (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints && navigator.msMaxTouchPoints > 0) ||
+    (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+  );
+}
+
+function sdmIsMobileUA(){
+  try{
+    var ua = (navigator.userAgent || '').toLowerCase();
+    return /iphone|ipod|ipad|android|mobile|silk|kindle|webos|blackberry|iemobile|opera mini/.test(ua);
+  }catch(e){
+    return false;
+  }
+}
+
+// ✅ PC 전용 "하드 가드"
+// 1) viewport 860 이하이면 즉시 종료
+// 2) 터치(모바일/태블릿) + 1024 이하이면 즉시 종료
+// 3) UA가 모바일이면 즉시 종료
+function sdmAbortIfMobile(){
+  var w = sdmViewportW();
+
+  var mm860 = (window.matchMedia && window.matchMedia('(max-width: 860px)').matches);
+  var mm1024 = (window.matchMedia && window.matchMedia('(max-width: 1024px)').matches);
+
+  var touch = sdmIsTouch();
+  var uaMobile = sdmIsMobileUA();
+
+  if (mm860 || w <= 860 || (touch && (mm1024 || w <= 1024)) || uaMobile){
+    try{
+      var old = document.getElementById('floating-banner-pc');
+      if (old && old.parentNode) old.parentNode.removeChild(old);
+
+      var dock = document.getElementById('fbpDockWrap');
+      if (dock && dock.parentNode) dock.parentNode.removeChild(dock);
+    }catch(e){}
+    return true; // abort
+  }
+  return false;
+}
+
+if (sdmAbortIfMobile()){
+  return;
+}
+
+
   if (window.__SOODAM_BANNER_PC_LOADED__) return;
   window.__SOODAM_BANNER_PC_LOADED__ = true;
+  // ✅ 런타임에도 모바일로 판정되면 즉시 제거 (기기 회전/리사이즈/임웹 미리보기 변동 대응)
+  function __fbpRuntimeGuard(){
+    if (sdmAbortIfMobile()){
+      // 혹시 다시 실행될 수 있게 플래그도 내려둠(원치 않으면 지워도 됨)
+      try{ window.__SOODAM_BANNER_PC_LOADED__ = false; }catch(e){}
+      return true;
+    }
+    return false;
+  }
+  window.addEventListener('resize', __fbpRuntimeGuard, {passive:true});
+  window.addEventListener('orientationchange', __fbpRuntimeGuard, {passive:true});
+  if (__fbpRuntimeGuard()) return;
+
 
   // 1) Inject CSS
-  var __FBP_CSS__ = `:root{
+  var __FBP_CSS__ = `@media (max-width: 860px){#floating-banner-pc,#fbpDockWrap{display:none!important;}}
+@media (pointer: coarse) and (max-width: 1024px){#floating-banner-pc,#fbpDockWrap{display:none!important;}}
+:root{
   --panel:#fff; --line:#E6E1DA; --text:#2A2A2A; --sub:#7a736b; --accent:#5A4633;
   --shadow:0 10px 28px rgba(0,0,0,.16);
 
@@ -499,7 +573,7 @@ object-fit:contain;
     minmax(120px, 140px) !important;  /* 문의하기 버튼 */
   column-gap:12px;
 }
-	
+    
 #floating-banner-pc:not(.expanded) .fbp-row{ display:none !important;
  }
 
@@ -568,7 +642,6 @@ object-fit:contain;
   #fbpSubmit{ grid-column: 1 / -1; width: 100%; }
   #fbpFreeWrap{ grid-column: 1 / -1; }
 }
-
 
 /* 문의하기 버튼 */
 .fbp-submit{
@@ -673,7 +746,6 @@ object-fit:contain;
   50%{transform:translateY(-1px)}
   100%{transform:translateY(0)}
 }
-
 
 
 /* =========================
@@ -825,7 +897,6 @@ object-fit:contain;
 @keyframes fbpFadeUp{
   to{ opacity:1; transform:translateY(0); }
 }
-
 
 /* ✅ 정책 링크(밑줄) */
 .fbpPolicyLinkRow{ margin-top:10px; }
@@ -1113,7 +1184,6 @@ object-fit:contain;
     </div>
 </div>
 
-
   <!-- 우: 접힘=가로행, 확장=2×3 그리드 -->
   <div class="fbp-card right" id="fbpRight">
     <div class="icons-row">
@@ -1315,7 +1385,6 @@ object-fit:contain;
 
 
 
-
 <!-- ✅ 접수 완료 모달(확인 누를 때까지 유지) -->
 <div id="fbpConfirmModal" aria-hidden="true">
   <div class="fbpConfirmBackdrop"></div>
@@ -1509,7 +1578,6 @@ function closeConsent(){
   consentModal.setAttribute('aria-hidden','true');
   setConsentState('ask');
 }
-
 
 // ✅ 개인정보처리방침 전문 모달
 function openPolicy(){
@@ -1858,3 +1926,5 @@ if(cancelBtn){
   }
 })();
 })();
+
+
