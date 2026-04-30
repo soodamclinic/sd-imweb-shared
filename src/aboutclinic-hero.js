@@ -87,24 +87,17 @@ html.sdm-snap-lock, body.sdm-snap-lock{
 }
 #sdmHero5 .sdm-question::before{
   content:""; position:absolute; z-index:-1; pointer-events:none;
-  top:-96px; bottom:120px; left:-190px; right:-96px;
-  border-radius: 72px;
+  top:-140px; bottom:60px; left:-260px; right:-140px;
+  border-radius: 50%;
   background:
-    radial-gradient(92% 92% at 30% 44%,
-      rgba(0,0,0,0.42) 0%,
-      rgba(0,0,0,0.30) 34%,
-      rgba(0,0,0,0.16) 60%,
-      rgba(0,0,0,0.05) 80%,
-      rgba(0,0,0,0.00) 100%
-    ),
-    linear-gradient(90deg,
-      rgba(0,0,0,0.10) 0%,
-      rgba(0,0,0,0.06) 34%,
-      rgba(0,0,0,0.02) 58%,
+    radial-gradient(60% 60% at 32% 52%,
+      rgba(0,0,0,0.32) 0%,
+      rgba(0,0,0,0.22) 22%,
+      rgba(0,0,0,0.12) 44%,
+      rgba(0,0,0,0.04) 68%,
       rgba(0,0,0,0.00) 100%
     );
-  -webkit-backdrop-filter: blur(10px) saturate(138%) contrast(108%);
-  backdrop-filter: blur(10px) saturate(138%) contrast(108%);
+  filter: blur(28px);
 }
 #sdmHero5 .sdm-lines{
   display: grid; grid-template-rows: repeat(4, 1.08em);
@@ -167,25 +160,25 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   background:
     linear-gradient(102deg,
       rgba(255,255,255,0.00) 0%,
-      rgba(255,255,255,0.07) 16%,
-      rgba(255,255,255,0.34) 26%,
-      rgba(255,255,255,0.12) 34%,
+      rgba(255,255,255,0.04) 16%,
+      rgba(255,255,255,0.22) 26%,
+      rgba(255,255,255,0.08) 34%,
       rgba(255,255,255,0.00) 46%,
-      rgba(255,248,240,0.08) 56%,
+      rgba(255,248,240,0.04) 56%,
       rgba(255,255,255,0.00) 68%
     ),
     radial-gradient(72% 120% at 16% 18%,
-      rgba(255,255,255,0.30) 0%,
-      rgba(255,255,255,0.12) 26%,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 26%,
       rgba(255,255,255,0.00) 58%
     ),
     radial-gradient(circle at var(--mx) var(--my),
-      rgba(255,255,255,0.34),
-      rgba(255,255,255,0.12) 26%,
+      rgba(255,255,255,0.22),
+      rgba(255,255,255,0.08) 26%,
       rgba(255,255,255,0.00) 62%
     );
   filter: blur(11px);
-  opacity: 0.95;
+  opacity: 0.7;
   transform: rotate(-7deg) translate3d(0,0,0);
   animation: sdmLiquidSheenDrift 5.8s ease-in-out infinite alternate;
 }
@@ -709,9 +702,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   background: linear-gradient(
     to bottom,
     rgba(0,0,0,0.00) 0%,
-    rgba(0,0,0,0.08) 40%,
-    rgba(0,0,0,0.16) 75%,
-    rgba(0,0,0,0.22) 100%
+    rgba(0,0,0,0.02) 60%,
+    rgba(0,0,0,0.08) 100%
   );
 }
 #sdmHero5 .sdm-sel > *{ position: relative; z-index: 2; }
@@ -727,7 +719,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   margin: 0;
   font-size: 14px; font-weight: 900;
   letter-spacing: -0.02em;
-  color: rgba(203,187,177,0.94);
+  color: rgba(255,255,255,0.97);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.30), 0 0 1px rgba(0,0,0,0.40);
   line-height: 1.14;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -735,7 +728,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   margin: 0;
   font-size: 12px; line-height: 1.35;
   letter-spacing: -0.01em;
-  color: rgba(203,187,177,0.72);
+  color: rgba(255,255,255,0.82);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.28);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -758,7 +752,7 @@ html.sdm-snap-lock, body.sdm-snap-lock{
     inset 0 1px 0 rgba(255,255,255,0.06);
   -webkit-backdrop-filter: blur(8px) saturate(118%);
   backdrop-filter: blur(8px) saturate(118%);
-  height: 382px; min-height: 382px;
+  height: auto; min-height: 440px;
   display: flex; flex-direction: column;
 }
 #sdmHero5 .sdm-panelTag{
