@@ -24,6 +24,24 @@ html.sdm-bg-on::before{
   background-image: url("https://cdn.imweb.me/upload/S20250626bc7495188971b/35a22e4230dab.jpg");
   background-size: cover; background-position: center center; background-repeat: no-repeat;
   transform: translateZ(0);
+  will-change: transform;
+  contain: paint;
+}
+
+/* Respect reduced-motion preference + low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  #sdmHero5 .sdm-belt,
+  #sdmHero5 .sdm-tile,
+  #sdmHero5 .sdm-hot,
+  #sdmHero5 .sdm-hotCard,
+  #sdmHero5 .sdm-morepill,
+  #sdmHero5 .sdm-sel,
+  #sdmHero5 .sdm-layer,
+  #sdmHero5 .sdm-brandPlain,
+  #sdmHero5 .sdm-brandMainBlock,
+  #sdmHero5 .sdm-brandPhilosophyBlock { transition: none !important; }
+  #sdmHero5 .sdm-hintChevron,
+  #sdmHero5 .sdm-ghost-caret { animation: none !important; }
 }
 
 /* ========== Snap-scroll lock helpers ========== */
@@ -91,13 +109,12 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   border-radius: 50%;
   background:
     radial-gradient(60% 60% at 32% 52%,
-      rgba(0,0,0,0.32) 0%,
-      rgba(0,0,0,0.22) 22%,
-      rgba(0,0,0,0.12) 44%,
-      rgba(0,0,0,0.04) 68%,
+      rgba(0,0,0,0.30) 0%,
+      rgba(0,0,0,0.20) 22%,
+      rgba(0,0,0,0.10) 44%,
+      rgba(0,0,0,0.03) 68%,
       rgba(0,0,0,0.00) 100%
     );
-  filter: blur(28px);
 }
 #sdmHero5 .sdm-lines{
   display: grid; grid-template-rows: repeat(4, 1.08em);
@@ -130,8 +147,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.28);
   background: rgba(255,255,255,0.04);
-  -webkit-backdrop-filter: blur(10px) saturate(175%) contrast(122%) brightness(1.04);
-  backdrop-filter: blur(10px) saturate(175%) contrast(122%) brightness(1.04);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  backdrop-filter: blur(8px) saturate(130%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.44),
     inset 0 -1px 0 rgba(255,255,255,0.10),
@@ -180,7 +197,6 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   filter: blur(11px);
   opacity: 0.7;
   transform: rotate(-7deg) translate3d(0,0,0);
-  animation: sdmLiquidSheenDrift 5.8s ease-in-out infinite alternate;
 }
 #sdmHero5 .sdm-morepill::after{
   content:""; position:absolute; inset:0;
@@ -640,8 +656,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
     inset 12px 12px 24px rgba(255,255,255,0.02),
     inset -18px -18px 26px rgba(85,58,36,0.10),
     0 8px 24px rgba(0,0,0,0.06);
-  -webkit-backdrop-filter: blur(10px) saturate(160%) contrast(110%);
-  backdrop-filter: blur(10px) saturate(160%) contrast(110%);
+  -webkit-backdrop-filter: blur(8px) saturate(125%);
+  backdrop-filter: blur(8px) saturate(125%);
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -691,9 +707,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
       rgba(255,255,255,0.12) 26%,
       rgba(255,255,255,0.00) 58%
     );
-  filter: blur(11px); opacity: 0.95;
+  filter: blur(11px); opacity: 0.85;
   transform: rotate(-7deg) translate3d(0,0,0);
-  animation: sdmLiquidSheenDrift 5.8s ease-in-out infinite alternate;
 }
 #sdmHero5 .sdm-sel::after{
   content:""; position:absolute; inset:0;
