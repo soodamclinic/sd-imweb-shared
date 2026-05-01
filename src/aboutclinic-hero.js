@@ -105,16 +105,17 @@ html.sdm-snap-lock, body.sdm-snap-lock{
 }
 #sdmHero5 .sdm-question::before{
   content:""; position:absolute; z-index:-1; pointer-events:none;
-  top:-140px; bottom:60px; left:-260px; right:-140px;
+  top:-180px; bottom:-40px; left:-300px; right:-180px;
   border-radius: 50%;
   background:
-    radial-gradient(60% 60% at 32% 52%,
-      rgba(0,0,0,0.30) 0%,
-      rgba(0,0,0,0.20) 22%,
-      rgba(0,0,0,0.10) 44%,
-      rgba(0,0,0,0.03) 68%,
+    radial-gradient(50% 50% at 36% 50%,
+      rgba(0,0,0,0.22) 0%,
+      rgba(0,0,0,0.14) 30%,
+      rgba(0,0,0,0.06) 56%,
+      rgba(0,0,0,0.02) 78%,
       rgba(0,0,0,0.00) 100%
     );
+  filter: blur(14px);
 }
 #sdmHero5 .sdm-lines{
   display: grid; grid-template-rows: repeat(4, 1.08em);
@@ -272,7 +273,6 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   height: clamp(84px, 7.2vw, 118px);
   border-radius: 22px;
   background: rgba(255,255,255,0.14);
-  backdrop-filter: blur(2px);
   border: 1px solid rgba(255,255,255,0.14);
   display:grid; place-items:center;
   opacity: 0.10;
@@ -311,20 +311,12 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   position: absolute; inset: 0;
   z-index: 26; pointer-events: none;
   background:
-    radial-gradient(64% 40% at 48% 36%,
-      rgba(0,0,0,0.24) 0%,
-      rgba(0,0,0,0.12) 40%,
-      rgba(0,0,0,0.04) 64%,
-      rgba(0,0,0,0.00) 84%
-    ),
-    linear-gradient(90deg,
-      rgba(0,0,0,0.03) 0%,
-      rgba(0,0,0,0.00) 18%,
-      rgba(0,0,0,0.00) 82%,
-      rgba(0,0,0,0.03) 100%
+    radial-gradient(56% 36% at 50% 38%,
+      rgba(0,0,0,0.18) 0%,
+      rgba(0,0,0,0.08) 50%,
+      rgba(0,0,0,0.00) 100%
     );
-  mix-blend-mode: multiply;
-  opacity: 0.58;
+  opacity: 0.85;
 }
 
 /* ========== Hero arrows (Act 1 only) ========== */
@@ -1228,8 +1220,8 @@ html.sdm-snap-lock, body.sdm-snap-lock{
   // =========================================================
   function initBelt(ctx) {
     var TYPE_SPEED = 120;
-    var HOLD_AFTER_TYPED = 1600;
-    var SHIFT_MS_AUTO = 220;
+    var HOLD_AFTER_TYPED = 3200;
+    var SHIFT_MS_AUTO = 260;
 
     // preload icons
     HERO_ITEMS.forEach(function (it) { (new Image()).src = it.iconUrl; });
