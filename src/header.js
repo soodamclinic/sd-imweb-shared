@@ -41,10 +41,10 @@
   var css = `
 :root{
   --sdm-bg:#F3EEE6;
-  --sdm-text:#141414;
-  --sdm-sub:rgba(0,0,0,.55);
-  --sdm-line:rgba(0,0,0,.10);
-  --sdm-accent:#5A4633;
+  --sdm-text:#3A332D;
+  --sdm-sub:rgba(58,51,45,.7);
+  --sdm-line:rgba(58,51,45,.08);
+  --sdm-accent:#3A332D;
 
   --sdm-core: 960px;
   --sdm-corePad: 18px;
@@ -127,7 +127,7 @@
   font-weight:950;
   letter-spacing:.2px;
   color:#fff;
-  background: rgba(90,70,51,.88);
+  background: rgba(58,51,45,.88);
   border: 1px solid rgba(255,255,255,.35);
   margin-right: 8px;
   transform: translateY(-.5px);
@@ -250,7 +250,7 @@
   height:20px;
   padding:0 8px;
   border-radius:999px;
-  background: rgba(90,70,51,.78);
+  background: rgba(58,51,45,.78);
   color:#fff;
   font-size:11px;
   font-weight:800;
@@ -281,7 +281,7 @@
 .sdmH-compactLine{
   display:none;
   font-size: 12px;
-  color: rgba(0,0,0,.62);
+  color: rgba(58,51,45,.62);
   letter-spacing: -0.15px;
   white-space: nowrap;
   overflow: hidden;
@@ -440,8 +440,9 @@
   padding: 0 10px;
 
   border-radius: 999px;
-  border: 1px solid rgba(90,70,51,.22);
+  border: 1px solid rgba(58,51,45,.16);
   background: rgba(255,255,255,.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 4px 12px rgba(58,51,45,.10);
   line-height: 1;
 
   align-self: center;
@@ -482,7 +483,7 @@
   pointer-events:auto;
   border-top: 1px solid var(--sdm-line);
   border-bottom: 1px solid var(--sdm-line);
-  box-shadow: 0 18px 40px rgba(0,0,0,.10);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 18px 40px rgba(58,51,45,.12);
 }
 
 .sdmD-inner{
@@ -515,7 +516,7 @@
 .sdmD-list{ display:flex; flex-direction:column; gap: 14px; }
 .sdmD-a{
   text-decoration:none;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
   font-size: 13.5px;
   font-weight: 500;
   letter-spacing: -0.1px;
@@ -556,13 +557,13 @@ position: relative;
   height: 1.25em; /* 텍스트 높이와 거의 같게 */
   transform: translateY(-50%);
   border-radius: 3px;
-  background: rgba(90,70,51,0);
+  background: rgba(58,51,45,0);
   transition: background .14s ease;
 }
 
 /* hover 시: 바 보이고, 텍스트만 (바+gap)만큼 이동 */
 .sdmD-a:hover:before{
-  background: rgba(90,70,51,.36);
+  background: rgba(58,51,45,.36);
 }
 .sdmD-a:hover .sdmD-t{
   transform: translateX(calc(var(--sdmSubBarW) + var(--sdmSubBarGap)));
@@ -589,7 +590,7 @@ position: relative;
   font-size: 12.5px;
   font-weight: 950;
   letter-spacing: -0.15px;
-  color: rgba(0,0,0,.78);
+  color: rgba(58,51,45,.78);
 }
 #sdmH.sdm-allopen .sdmAllToggle .sdmAllText{ color: var(--sdm-accent); }
 
@@ -604,8 +605,8 @@ position: relative;
 
   padding-bottom: 12px;
   border-radius: 14px;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+  border: 1px solid rgba(58,51,45,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 14px 30px rgba(58,51,45,.14);
   background: rgba(243,238,230,.92);
   padding: 10px 14px;
 
@@ -636,7 +637,7 @@ position: relative;
   gap: 14px;
   align-items:center;
   padding: 10px 0;
-  border-top: 1px solid rgba(0,0,0,.07);
+  border-top: 1px solid rgba(58,51,45,.07);
 }
 .sdmAllRow:first-child{ border-top: 0; }
 
@@ -645,7 +646,7 @@ position: relative;
   font-size: 14px;
   font-weight: 950;
   letter-spacing: -0.2px;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.84);
   margin: 0;
   line-height: 1.25;
   text-align: right;
@@ -661,7 +662,7 @@ position: relative;
   width: 2px;
   height: 14px;
   border-radius: 2px;
-  background: rgba(90,70,51,.28);
+  background: rgba(58,51,45,.28);
 }
 .sdmAllItems{
   display:flex;
@@ -672,7 +673,7 @@ position: relative;
 .sdmAllA{
   display:inline-block;
   text-decoration:none;
-  color: rgba(0,0,0,.72);
+  color: rgba(58,51,45,.72);
   font-size: 12.5px;
   font-weight: 550;
   letter-spacing: -0.1px;
@@ -770,7 +771,7 @@ position: relative;
   height: var(--sdm-mBtnH);
   padding: 0;
   border-radius: 12px;
-  border: 1px solid rgba(90,70,51,.18);
+  border: 1px solid rgba(58,51,45,.18);
   background: rgba(255,255,255,.55);
   display:inline-flex;
   align-items:center;
@@ -791,7 +792,7 @@ position: relative;
   left:0; right:0;
   height:2px;
   border-radius: 2px;
-  background: rgba(90,70,51,.88);
+  background: rgba(58,51,45,.88);
 }
 .sdmM-hamIcon:before{ top:0; }
 .sdmM-hamIcon i{ top:5px; }
@@ -821,7 +822,7 @@ position: relative;
   font-size: var(--sdm-mTitleSize);
   font-weight: var(--sdm-mTitleWeight);
   letter-spacing: -0.35px;
-  color: rgba(0,0,0,.88);
+  color: rgba(58,51,45,.88);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -839,9 +840,9 @@ position: relative;
   height: var(--sdm-mBtnH);
   padding: 0 14px;
   border-radius: var(--sdm-mRadius);
-  border: 1px solid rgba(0,0,0,.12);
+  border: 1px solid rgba(58,51,45,.12);
   background: rgba(255,255,255,.55);
-  color: rgba(0,0,0,.85);
+  color: rgba(58,51,45,.85);
   font-weight: 950;
   font-size: 12.5px;
   letter-spacing: -.2px;
@@ -857,7 +858,7 @@ position: relative;
 .sdmMDiv{
   width:100%;
   height:1px;
-  background: rgba(0,0,0,.10);
+  background: rgba(58,51,45,.10);
 }
 
 .sdmMNoticeLine{
@@ -876,7 +877,7 @@ position: relative;
 .sdmMOverlay{
   position:fixed;
   inset:0;
-  background: rgba(0,0,0,.34);
+  background: rgba(58,51,45,.34);
   opacity:0;
   pointer-events:none;
   transition: opacity .18s ease;
@@ -888,8 +889,8 @@ position: relative;
   height:100vh;
   width: var(--sdm-drawerW);
   background: rgba(243,238,230,.98);
-  border-right: 1px solid rgba(0,0,0,.10);
-  box-shadow: 18px 0 40px rgba(0,0,0,.20);
+  border-right: 1px solid rgba(58,51,45,.10);
+  box-shadow: 18px 0 40px rgba(58,51,45,.20);
   transform: translateX(-105%);
   transition: transform .22s ease;
   z-index: 100001;
@@ -905,7 +906,7 @@ position: relative;
   top: 0;
   z-index: 2;
   padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(0,0,0,.08);
+  border-bottom: 1px solid rgba(58,51,45,.08);
   background: rgba(243,238,230,.98);
   display:flex;
   align-items:center;
@@ -928,7 +929,7 @@ position: relative;
   font-size: 13px;
   font-weight: 950;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.86);
+  color: rgba(58,51,45,.86);
   white-space: nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
@@ -938,7 +939,7 @@ position: relative;
   width: 36px;
   height: 34px;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
 }
@@ -949,7 +950,7 @@ position: relative;
   font-weight: 900;
   line-height: 32px;
   text-align:center;
-  color: rgba(0,0,0,.68);
+  color: rgba(58,51,45,.68);
 }
 
 .sdmMDrawerBody{
@@ -968,10 +969,10 @@ position: relative;
 .sdmM3Pick a{
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.40);
   text-decoration:none;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.84);
   font-weight: 950;
   font-size: 13px;
   display:flex;
@@ -980,17 +981,17 @@ position: relative;
   padding: 0 14px;
 }
 .sdmM3Pick a span:last-child{
-  color: rgba(0,0,0,.45);
+  color: rgba(58,51,45,.45);
   font-weight: 900;
 }
 
 /* accordion */
 .sdmMAcc{
-  border-top: 1px solid rgba(0,0,0,.08);
+  border-top: 1px solid rgba(58,51,45,.08);
   padding-top: 10px;
 }
 .sdmMAccItem{
-  border-bottom: 1px solid rgba(0,0,0,.07);
+  border-bottom: 1px solid rgba(58,51,45,.07);
   padding: 8px 0;
 }
 .sdmMAccBtn{
@@ -1007,7 +1008,7 @@ position: relative;
   font-size: 13px;
   font-weight: 950;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.84);
 }
 .sdmMAccBtn i{
   width: 22px; height: 22px;
@@ -1015,7 +1016,7 @@ position: relative;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  color: rgba(0,0,0,.55);
+  color: rgba(58,51,45,.55);
   font-style: normal;
   font-weight: 900;
 }
@@ -1039,7 +1040,7 @@ position: relative;
 }
 .sdmMAccList a{
   text-decoration:none;
-  color: rgba(0,0,0,.72);
+  color: rgba(58,51,45,.72);
   font-size: 12.5px;
   font-weight: 600;
   line-height: 1.25;
@@ -1051,11 +1052,11 @@ position: relative;
   width: 100%;
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
   font-weight: 950;
-  color: rgba(0,0,0,.80);
+  color: rgba(58,51,45,.80);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -1065,7 +1066,7 @@ position: relative;
 .sdmMAllBox{
   margin-top: 10px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.25);
   padding: 10px 10px;
   overflow:hidden;
@@ -1081,13 +1082,13 @@ position: relative;
 }
 .sdmMAllRow{
   padding: 10px 4px;
-  border-top: 1px solid rgba(0,0,0,.06);
+  border-top: 1px solid rgba(58,51,45,.06);
 }
 .sdmMAllRow:first-child{ border-top:0; }
 .sdmMAllTitle{
   font-size: 12.5px;
   font-weight: 950;
-  color: rgba(0,0,0,.82);
+  color: rgba(58,51,45,.82);
   margin-bottom: 8px;
 }
 .sdmMAllItems{
@@ -1099,9 +1100,9 @@ position: relative;
   font-size: 11.5px;
   font-weight: 650;
   text-decoration:none;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
   background: rgba(255,255,255,.42);
-  border: 1px solid rgba(0,0,0,.06);
+  border: 1px solid rgba(58,51,45,.06);
   border-radius: 999px;
   padding: 5px 10px;
 }
