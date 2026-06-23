@@ -217,17 +217,47 @@ function findDozDocOnce(){
   flex:0 0 auto;
 }
 .sdmM-logo img{ height:26px; width:auto; display:block; }
+.sdmM-brandText{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  gap:1px;
+  transform: translateY(var(--sdm-mTitleY));
+}
 .sdmM-title{
-  flex:1;
   min-width:0;
   font-size: var(--sdm-mTitleSize);
   font-weight: 900;
   letter-spacing: -0.35px;
+  line-height: 1.1;
   color: var(--sdm-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transform: translateY(var(--sdm-mTitleY));
+}
+/* ✅ 서브 티커: 브랜드명 아래 작은 한 줄, 5초마다 아래→위 롤업 */
+.sdmM-sub{
+  height: 13px;
+  line-height: 13px;
+  overflow: hidden;
+}
+.sdmM-subText{
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  color: rgba(58,51,45,.55);
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+@keyframes sdmSubRoll{
+  0%{ transform: translateY(110%); opacity: 0; }
+  100%{ transform: translateY(0); opacity: 1; }
+}
+.sdmM-subText.rollin{ animation: sdmSubRoll .5s cubic-bezier(.22,.61,.36,1) both; }
+@media (prefers-reduced-motion: reduce){
+  .sdmM-subText.rollin{ animation: none; }
 }
 
 .sdmM-right{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
@@ -633,12 +663,6 @@ text-shadow: none !important;
   color: rgba(58,51,45,.40);
 }
 
-/* Title text in */
-@keyframes sdmTextIn{
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.sdm-textin{ animation: sdmTextIn 650ms ease both; }
 @media (prefers-reduced-motion: reduce){
   .sdmMAllItems a.sdm-pillHot{ animation: none !important; }
 }`;
@@ -668,7 +692,10 @@ text-shadow: none !important;
             <a class="sdmM-logo" href="/" aria-label="여의도 수담의원">
               <img src="https://cdn.imweb.me/upload/S20250626bc7495188971b/33f5d0e079c72.png" alt="여의도 수담의원" />
             </a>
-            <div class="sdmM-title" id="sdmMTitleText">여의도 수담의원</div>
+            <div class="sdmM-brandText">
+              <div class="sdmM-title" id="sdmMTitleText">여의도 수담의원</div>
+              <div class="sdmM-sub" aria-live="polite"><span class="sdmM-subText" id="sdmMSubText">아름다울 일상을 진료합니다</span></div>
+            </div>
           </div>
         </div>
 
@@ -910,7 +937,7 @@ text-shadow: none !important;
 
       var mDrawerBody = doc.getElementById('sdmMDrawerBody');
 
-      var mTitleEl = doc.getElementById('sdmMTitleText');
+      var mSubEl = doc.getElementById('sdmMSubText');
       var mNoticeEl = doc.getElementById('sdmMNoticeText');
 
       var mOpen = false;
@@ -1286,31 +1313,31 @@ text-shadow: none !important;
         }, 140);
       }
 
-      /* Title Rotator */
-      var TITLE_ITEMS = [
-        '여의도 수담의원',
+      /* ✅ 서브 티커 — 브랜드명(타이틀)은 고정, 아래 한 줄만 롤업 */
+      var SUB_ITEMS = [
         '아름다울 일상을 진료합니다',
         '가정의학과 전문의 진료',
-        '젊음유지 클리닉'
+        '젊음유지 · 혈당 · 피부 클리닉',
+        '여의도, 당신 곁의 주치의'
       ];
-      var titleIdx = 0;
+      var subIdx = 0;
 
-      function setTitleText(nextText){
-        if (!mTitleEl) return;
-        mTitleEl.classList.remove('sdm-textin');
-        void mTitleEl.offsetWidth;
-        mTitleEl.textContent = nextText;
+      function setSubText(nextText){
+        if (!mSubEl) return;
+        mSubEl.classList.remove('rollin');
+        void mSubEl.offsetWidth;
+        mSubEl.textContent = nextText;
         requestAnimationFrame(function(){
-          mTitleEl.classList.add('sdm-textin');
+          mSubEl.classList.add('rollin');
         });
       }
-      setTitleText(TITLE_ITEMS[0]);
+      setSubText(SUB_ITEMS[0]);
 
-      if (!win.__SDM_MOBILE_TITLE_TIMER__){
-        win.__SDM_MOBILE_TITLE_TIMER__ = win.setInterval(function(){
-          titleIdx = (titleIdx + 1) % TITLE_ITEMS.length;
-          setTitleText(TITLE_ITEMS[titleIdx]);
-        }, 3000);
+      if (!win.__SDM_MOBILE_SUB_TIMER__){
+        win.__SDM_MOBILE_SUB_TIMER__ = win.setInterval(function(){
+          subIdx = (subIdx + 1) % SUB_ITEMS.length;
+          setSubText(SUB_ITEMS[subIdx]);
+        }, 5000);
       }
 
       // INIT
