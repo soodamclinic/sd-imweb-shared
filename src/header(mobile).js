@@ -181,10 +181,17 @@ function findDozDocOnce(){
   height:2px;
   border-radius:2px;
   background: rgba(90,70,51,.88);
+  transform-origin: center;
+  transition: transform .22s cubic-bezier(.4,0,.2,1), opacity .15s ease;
 }
 .sdmM-hamIcon:before{ top:0; }
 .sdmM-hamIcon i{ top:5px; }
 .sdmM-hamIcon:after{ bottom:0; }
+
+/* ✅ 열릴 때 3줄 → X 모핑 */
+#sdmH.sdmM-open .sdmM-hamIcon i{ opacity:0; transform: scaleX(.4); }
+#sdmH.sdmM-open .sdmM-hamIcon:before{ top:5px; transform: rotate(45deg); }
+#sdmH.sdmM-open .sdmM-hamIcon:after{ bottom:5px; transform: rotate(-45deg); }
 
 .sdmM-brand{
   display:flex;
