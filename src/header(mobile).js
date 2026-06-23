@@ -233,12 +233,12 @@ function findDozDocOnce(){
 .sdmM-right{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
 .sdmM-pill{
   height: var(--sdm-mBtnH);
-  padding: 0 14px;
+  padding: 0 16px;
   border-radius: var(--sdm-mRadius);
-  border: 1px solid rgba(58,51,45,.12);
-  background: rgba(255,255,255,.55);
-  color: rgba(58,51,45,.85);
-  font-weight: 950;
+  border: 1px solid rgba(58,51,45,.92);
+  background: rgba(58,51,45,.92);
+  color: #fff;
+  font-weight: 800;
   font-size: 12.5px;
   letter-spacing: -.2px;
   text-decoration:none;
@@ -247,7 +247,10 @@ function findDozDocOnce(){
   justify-content:center;
   line-height: 1;
   white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 4px 14px rgba(58,51,45,.22);
+  transition: transform .12s ease, box-shadow .2s ease;
 }
+.sdmM-pill:active{ transform: translateY(1px) scale(.98); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 2px 8px rgba(58,51,45,.18); }
 .sdmMDiv{ width:100%; height:1px; background: rgba(58,51,45,.10); }
 
 /* Notice */
