@@ -344,7 +344,9 @@ function findDozDocOnce(){
   top:0; left:0;
   height:100dvh;
   width: var(--sdm-drawerW);
-  background: rgba(243,238,230,.98);
+  background: rgba(247,242,235,.94);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
   border-right: 1px solid rgba(58,51,45,.10);
   box-shadow: 18px 0 40px rgba(58,51,45,.20);
   transform: translateX(-105%);
@@ -352,7 +354,19 @@ function findDozDocOnce(){
   z-index: 1000001;
   display:flex;
   flex-direction:column;
+  overflow: hidden;
 }
+/* ✅ 자화상 워터마크 — 갤러리 입구 결 (아주 살짝만 비침) */
+.sdmMDrawer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url('https://cdn.imweb.me/upload/S20250626bc7495188971b/35a22e4230dab.jpg') center/cover no-repeat;
+  opacity:.05;
+  pointer-events:none;
+  z-index:0;
+}
+.sdmMDrawerBody{ position:relative; z-index:1; }
 #sdmH.sdmM-open .sdmMOverlay{ opacity:1; pointer-events:auto; }
 #sdmH.sdmM-open .sdmMDrawer{ transform: translateX(0); }
 
@@ -363,7 +377,9 @@ function findDozDocOnce(){
   z-index: 5;
   padding: 14px 14px 10px;
   border-bottom: 1px solid rgba(58,51,45,.08);
-  background: rgba(243,238,230,.98);
+  background: rgba(247,242,235,.86);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
   display:block;
 }
 .sdmMDrawerTopRow{
@@ -629,7 +645,15 @@ text-shadow: none !important;
 }
 
 #sdmH.sdmM-allopen #sdmMAllToggle{ display:none; }
-#sdmMQuickCost{ margin-top: 10px; }
+/* ✅ 드로어 기본 CTA — 바 알약과 동일 다크 채움 */
+#sdmMQuickCost{
+  margin-top: 10px;
+  background: rgba(58,51,45,.92);
+  border: 1px solid rgba(58,51,45,.92);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 18px rgba(58,51,45,.22);
+}
+#sdmMQuickCost:active{ transform: translateY(1px) scale(.99); }
 
 /* Drawer footer */
 .sdmMFooter{
