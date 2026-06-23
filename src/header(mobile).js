@@ -139,9 +139,20 @@ function findDozDocOnce(){
 
 .sdmH-bar{
   width:100%;
-  background: var(--sdm-bg);
-  border-bottom: 1px solid var(--sdm-line);
+  background: rgba(247,242,235,.72);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+  backdrop-filter: blur(12px) saturate(125%);
+  border-bottom: 1px solid rgba(58,51,45,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 6px 20px rgba(58,51,45,.05);
+  transition: background .25s ease, box-shadow .25s ease;
 }
+/* ✅ 스크롤 시 글래스 응축 (배경 진해지고 그림자/바 높이 살짝 줄어듦) */
+#sdmH.is-scrolled .sdmH-bar{
+  background: rgba(247,242,235,.88);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 10px 28px rgba(58,51,45,.12);
+}
+.sdmMbar{ transition: height .25s ease; }
+#sdmH.is-scrolled .sdmMbar{ height: 52px; }
 
 /* 모바일 바 */
 .sdmM{ display:block; }
@@ -944,6 +955,15 @@ text-shadow: none !important;
 
       win.addEventListener('scroll', hardSyncBodyOffset, { passive:true });
       win.addEventListener('orientationchange', function(){ setTimeout(hardSyncBodyOffset, 150); });
+
+      /* ✅ 스크롤 응축: 8px 넘게 내리면 글래스 진해지고 바 살짝 줄어듦 */
+      function syncScrolledClass(){
+        var y = win.scrollY || doc.documentElement.scrollTop || 0;
+        if (y > 8) H.classList.add('is-scrolled');
+        else H.classList.remove('is-scrolled');
+      }
+      win.addEventListener('scroll', syncScrolledClass, { passive:true });
+      syncScrolledClass();
 
       if (win.visualViewport){
         win.visualViewport.addEventListener('resize', hardSyncBodyOffset);
