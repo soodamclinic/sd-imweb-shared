@@ -67,10 +67,11 @@ function findDozDocOnce(){
     var css = `
 :root{
   --sdm-bg:#F3EEE6;
-  --sdm-text:#141414;
-  --sdm-sub:rgba(0,0,0,.55);
-  --sdm-line:rgba(0,0,0,.10);
-  --sdm-accent:#5A4633;
+  --sdm-text:rgba(58,51,45,.94);
+  --sdm-sub:rgba(58,51,45,.7);
+  --sdm-line:rgba(58,51,45,.10);
+  --sdm-accent:rgba(58,51,45,.92);
+  --sdm-font:'SeoulNamsanJungM','Pretendard',system-ui,-apple-system,'Noto Sans KR',sans-serif;
 
   /* 모바일 */
   --sdm-mH: 56px;
@@ -93,7 +94,7 @@ function findDozDocOnce(){
 
   /* ✅ Badge 톤다운 레드 */
   --sdm-badgeRed:#A35B5B;         /* 너무 진한 빨강 X */
-  --sdm-badgeRedBorder:rgba(0,0,0,.10);
+  --sdm-badgeRedBorder:rgba(58,51,45,.10);
   --sdm-badgeGlow:rgba(163,91,91,.35);
 
   /* ✅ Hot pill 강조 (연한 테두리 + 펄스) */
@@ -132,6 +133,7 @@ function findDozDocOnce(){
   z-index: 999999;
   margin: 0 !important;
   background: transparent;
+  font-family: var(--sdm-font);
 }
 #sdmH, #sdmH *{ box-sizing:border-box; }
 
@@ -201,15 +203,13 @@ function findDozDocOnce(){
   flex:1;
   min-width:0;
   font-size: var(--sdm-mTitleSize);
-  font-weight: var(--sdm-mTitleWeight);
+  font-weight: 900;
   letter-spacing: -0.35px;
-  color: rgba(0,0,0,.88);
+  color: var(--sdm-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transform: translateY(var(--sdm-mTitleY));
-  font-weight: 1400;
-  -webkit-text-stroke: 0.65px rgba(0,0,0,.65);
 }
 
 .sdmM-right{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
@@ -217,9 +217,9 @@ function findDozDocOnce(){
   height: var(--sdm-mBtnH);
   padding: 0 14px;
   border-radius: var(--sdm-mRadius);
-  border: 1px solid rgba(0,0,0,.12);
+  border: 1px solid rgba(58,51,45,.12);
   background: rgba(255,255,255,.55);
-  color: rgba(0,0,0,.85);
+  color: rgba(58,51,45,.85);
   font-weight: 950;
   font-size: 12.5px;
   letter-spacing: -.2px;
@@ -230,7 +230,7 @@ function findDozDocOnce(){
   line-height: 1;
   white-space: nowrap;
 }
-.sdmMDiv{ width:100%; height:1px; background: rgba(0,0,0,.10); }
+.sdmMDiv{ width:100%; height:1px; background: rgba(58,51,45,.10); }
 
 /* Notice */
 .sdmNoticeBadge{
@@ -282,7 +282,7 @@ function findDozDocOnce(){
 .sdmMOverlay{
   position:fixed;
   inset:0;
-  background: rgba(0,0,0,.34);
+  background: rgba(58,51,45,.34);
   opacity:0;
   pointer-events:none;
   transition: opacity .18s ease;
@@ -294,8 +294,8 @@ function findDozDocOnce(){
   height:100dvh;
   width: var(--sdm-drawerW);
   background: rgba(243,238,230,.98);
-  border-right: 1px solid rgba(0,0,0,.10);
-  box-shadow: 18px 0 40px rgba(0,0,0,.20);
+  border-right: 1px solid rgba(58,51,45,.10);
+  box-shadow: 18px 0 40px rgba(58,51,45,.20);
   transform: translateX(-105%);
   transition: transform .22s ease;
   z-index: 1000001;
@@ -311,7 +311,7 @@ function findDozDocOnce(){
   top: 0;
   z-index: 5;
   padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(0,0,0,.08);
+  border-bottom: 1px solid rgba(58,51,45,.08);
   background: rgba(243,238,230,.98);
   display:block;
 }
@@ -332,7 +332,7 @@ function findDozDocOnce(){
   width: 36px;
   height: 34px;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
 }
@@ -343,7 +343,7 @@ function findDozDocOnce(){
   font-weight:900;
   line-height:32px;
   text-align:center;
-  color: rgba(0,0,0,.68);
+  color: rgba(58,51,45,.68);
 }
 
 #sdmMAllInTop{
@@ -364,17 +364,16 @@ function findDozDocOnce(){
 
 /* Quick line */
 .sdmMQuickTop{ margin: 6px 0 10px; }
-.sdmMQuickHr{ height:1px; background: rgba(0,0,0,.10); margin: 8px 0 0; }
+.sdmMQuickHr{ height:1px; background: rgba(58,51,45,.10); margin: 8px 0 0; }
 .sdmMQuickTitle{
   font-size: 12.5px;
   font-weight: 800;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
 }
 .sdmMQuickTitle b{
-  font-weight: 1400;
-  color: rgba(0,0,0,.92);
-  -webkit-text-stroke: 0.65px rgba(0,0,0,.65);
+  font-weight: 900;
+  color: rgba(58,51,45,.92);
 }
 
 /* 3 picks */
@@ -387,10 +386,10 @@ function findDozDocOnce(){
 .sdmM3Pick a{
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.40);
   text-decoration:none;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.84);
   font-weight: 950;
   font-size: 13px;
   display:flex;
@@ -410,7 +409,7 @@ function findDozDocOnce(){
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.sdmM3Pick a .chev{ color: rgba(0,0,0,.45); font-weight: 900; }
+.sdmM3Pick a .chev{ color: rgba(58,51,45,.45); font-weight: 900; }
 
 /* ✅ (REQ 2) 배지: 그림자 느낌 제거 + 은은한 글로우만 */
 .sdmMTag{
@@ -447,8 +446,8 @@ text-shadow: none !important;
   padding-top: 1px;
 }
 /* accordion */
-.sdmMAcc{ border-top: 1px solid rgba(0,0,0,.08); padding-top:10px; }
-.sdmMAccItem{ border-bottom: 1px solid rgba(0,0,0,.07); padding: 8px 0; }
+.sdmMAcc{ border-top: 1px solid rgba(58,51,45,.08); padding-top:10px; }
+.sdmMAccItem{ border-bottom: 1px solid rgba(58,51,45,.07); padding: 8px 0; }
 .sdmMAccBtn{
   width:100%;
   border:0;
@@ -461,10 +460,9 @@ text-shadow: none !important;
 }
 .sdmMAccBtn span{
   font-size: 15px;
-font-weight: 950;
--webkit-text-stroke: 0.55px rgba(0,0,0,.55); /* ✅ 체감 두께 강화 */
+  font-weight: 800;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.84);
+  color: var(--sdm-text);
 }
 .sdmMAccBtn i{
   width:22px; height:22px;
@@ -472,7 +470,7 @@ font-weight: 950;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  color: rgba(0,0,0,.55);
+  color: rgba(58,51,45,.55);
   font-style: normal;
   font-weight: 900;
 }
@@ -496,7 +494,7 @@ font-weight: 950;
 }
 .sdmMAccList a{
   text-decoration:none;
-  color: rgba(0,0,0,.72);
+  color: rgba(58,51,45,.72);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.50;
@@ -509,11 +507,11 @@ font-weight: 950;
   width: 100%;
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
   font-weight: 950;
-  color: rgba(0,0,0,.80);
+  color: rgba(58,51,45,.80);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -536,17 +534,16 @@ font-weight: 950;
   opacity: 1;
   transform: translateY(0);
   margin-top: 6px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   padding: 10px 10px;
 }
 
-.sdmMAllRow{ padding: 10px 4px; border-top: 1px solid rgba(0,0,0,.06); }
+.sdmMAllRow{ padding: 10px 4px; border-top: 1px solid rgba(58,51,45,.06); }
 .sdmMAllRow:first-child{ border-top:0; }
 .sdmMAllTitle{
   font-size: 14px;
-font-weight: 950;
--webkit-text-stroke: 0.55px rgba(0,0,0,.55); /* 체감 두께 업 */
-  color: rgba(0,0,0,.82);
+  font-weight: 800;
+  color: rgba(58,51,45,.82);
   margin-bottom: 12px;
 }
 .sdmMAllItems{ display:flex; flex-wrap:wrap; gap: 8px 10px; }
@@ -554,18 +551,18 @@ font-weight: 950;
   font-size: 11.5px;
   font-weight: 650;
   text-decoration:none;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
   background: rgba(255,255,255,.42);
-  border: 1px solid rgba(0,0,0,.06);
+  border: 1px solid rgba(58,51,45,.06);
   border-radius: 999px;
   padding: 5px 10px;
 }
 
 /* ✅ (REQ 3) Hot pill: 레이아웃 안 흔들리게 "가짜 두께"만 펄스 */
 @keyframes sdmHotPulseShadow{
-  0%   { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(58,51,45,0); }
   50%  { box-shadow: 0 0 0 3px var(--sdm-hotGlow2); }
-  100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(58,51,45,0); }
 }
 
 .sdmMAllItems a.sdm-pillHot{
@@ -587,12 +584,12 @@ font-weight: 950;
 .sdmMFooter{
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid rgba(0,0,0,.10);
-  color: rgba(0,0,0,.55);
+  border-top: 1px solid rgba(58,51,45,.10);
+  color: rgba(58,51,45,.55);
   font-size: 11.5px;
   line-height: 1.55;
 }
-.sdmMFooter strong{ color: rgba(0,0,0,.70); font-weight: 900; }
+.sdmMFooter strong{ color: rgba(58,51,45,.70); font-weight: 900; }
 .sdmMFooterTop{
   display:flex;
   align-items:center;
@@ -600,19 +597,19 @@ font-weight: 950;
   flex-wrap:wrap;
   margin-bottom: 10px;
 }
-.sdmMFooterTop .dim{ color: rgba(0,0,0,.45); }
+.sdmMFooterTop .dim{ color: rgba(58,51,45,.45); }
 .sdmMFooterGrid{
   display:grid;
   grid-template-columns: 92px 1fr;
   row-gap: 6px;
   column-gap: 10px;
 }
-.sdmMFooterK{ color: rgba(0,0,0,.48); }
-.sdmMFooterV{ color: rgba(0,0,0,.66); font-weight: 800; }
+.sdmMFooterK{ color: rgba(58,51,45,.48); }
+.sdmMFooterV{ color: rgba(58,51,45,.66); font-weight: 800; }
 .sdmMFooterCopy{
   margin-top: 10px;
   font-size: 11px;
-  color: rgba(0,0,0,.40);
+  color: rgba(58,51,45,.40);
 }
 
 /* Title text in */
