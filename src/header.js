@@ -45,6 +45,8 @@
   --sdm-sub:rgba(0,0,0,.55);
   --sdm-line:rgba(0,0,0,.10);
   --sdm-accent:#5A4633;
+  --sdm-brass: rgba(156,123,77,.95);
+  --sdm-gold: rgba(156,123,77,.40);
 
   --sdm-core: 960px;
   --sdm-corePad: 18px;
@@ -119,18 +121,32 @@
 .sdmNoticeBadge{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
+  gap:5px;
   height:18px;
-  padding:0 8px;
-  border-radius:999px;
-  font-size:10.5px;
-  font-weight:950;
-  letter-spacing:.2px;
-  color:#fff;
-  background: rgba(90,70,51,.88);
-  border: 1px solid rgba(255,255,255,.35);
+  padding:0;
+  font-size:9.5px;
+  font-weight:900;
+  letter-spacing:.18em;
+  color: var(--sdm-brass);
+  background: transparent;
+  text-transform: uppercase;
   margin-right: 8px;
   transform: translateY(-.5px);
+}
+.sdmNoticeBadge::before{
+  content:"";
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background: var(--sdm-brass);
+  animation: sdmDotPulse 2.4s ease-in-out infinite;
+}
+@keyframes sdmDotPulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(156,123,77,.5); }
+  50%{ box-shadow:0 0 0 3px rgba(156,123,77,0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .sdmNoticeBadge::before{ animation:none; }
 }
 
 /* =========================
@@ -247,14 +263,14 @@
 #sdmKicker .sdmH-kickerBadge{
   display:inline-flex;
   align-items:center;
-  height:20px;
+  height:19px;
   padding:0 8px;
   border-radius:999px;
-  background: rgba(90,70,51,.78);
+  background: rgba(90,70,51,.66);
   color:#fff;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:-0.1px;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:0;
   line-height:1;
 }
 
@@ -331,9 +347,11 @@
   padding: 6px var(--sdm-pillPadX);
   border-radius: 999px;
   background: transparent;
+  border: 1px solid transparent;
 }
 .sdmH-item:hover .sdmH-linkText{
   background: rgba(255,255,255,.55);
+  border-color: rgba(156,123,77,.16);
 }
 
 /* LEFT */
@@ -398,6 +416,7 @@
   background: var(--sdm-accent);
   letter-spacing: .3px;
   overflow:hidden;
+  animation: sdmGoldGlow 2.8s ease-in-out infinite;
 }
 .sdmH-spark{
   position:absolute;
@@ -426,6 +445,7 @@
 }
 
 .sdmH-cta{
+  position: relative;
   grid-row: 5;
   display:inline-flex;
   align-items:center;
@@ -449,9 +469,25 @@
 
   transition: transform .12s ease, background .12s ease;
 }
+.sdmH-cta::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  pointer-events:none;
+  box-shadow:0 0 0 0 rgba(156,123,77,0);
+  animation: sdmGoldGlow 2.8s ease-in-out infinite;
+}
 .sdmH-cta:hover{
   transform: translateY(-1px);
   background: rgba(255,255,255,.65);
+}
+@keyframes sdmGoldGlow{
+  0%,100%{ box-shadow:0 0 0 0 rgba(156,123,77,0); }
+  50%{ box-shadow:0 0 11px 1px rgba(156,123,77,.42); }
+}
+@media (prefers-reduced-motion: reduce){
+  .sdmH-cta::after, .sdmH-badge{ animation:none; }
 }
 
 /* ✅ 기본상태 여백 */
@@ -525,47 +561,35 @@
   text-overflow: clip;
 }
 .sdmD-a:hover{
-position: relative;
-  display: inline-flex;
-  align-items: center;
-  padding-left: 0;
+  color: var(--sdm-accent);
   transition: color .12s ease;
 }
 /* =========================
-   ✅ 하위메뉴 hover: 세로바 + (바+gap)만큼 우측 밀림
+   ✅ 하위메뉴 hover: 텍스트 옆 골드 셰브론
+   (정렬 유지 — 텍스트는 안 밀리고, 절대배치라 reflow 없음)
 ========================= */
-:root{
-  --sdmSubBarW: 3px;      /* 바 두께 (살짝 두껍게) */
-  --sdmSubBarGap: 8px;    /* 바와 텍스트 사이 gap */
-}
-
-/* 텍스트만 움직이기 위해 span으로 감싸 쓸 예정 */
 .sdmD-a .sdmD-t{
+  position: relative;
   display:inline-block;
-  transform: translateX(0);
-  transition: transform .14s ease;
+  transition: color .14s ease;
 }
-
-/* 세로 바 */
-.sdmD-a:before{
-  content:"";
+.sdmD-a .sdmD-t:after{
+  content:"\\203A"; /* › */
   position:absolute;
-  left:0;
+  left:100%;
   top:50%;
-  width: var(--sdmSubBarW);
-  height: 1.25em; /* 텍스트 높이와 거의 같게 */
-  transform: translateY(-50%);
-  border-radius: 3px;
-  background: rgba(90,70,51,0);
-  transition: background .14s ease;
+  margin-left:4px;
+  transform: translate(-2px,-50%);
+  color: var(--sdm-brass);
+  font-weight:900;
+  font-size:13px;
+  line-height:1;
+  opacity:0;
+  transition: opacity .14s ease, transform .14s ease;
 }
-
-/* hover 시: 바 보이고, 텍스트만 (바+gap)만큼 이동 */
-.sdmD-a:hover:before{
-  background: rgba(90,70,51,.36);
-}
-.sdmD-a:hover .sdmD-t{
-  transform: translateX(calc(var(--sdmSubBarW) + var(--sdmSubBarGap)));
+.sdmD-a:hover .sdmD-t:after{
+  opacity:.9;
+  transform: translate(0,-50%);
 }
 
 /* =========================
@@ -603,10 +627,10 @@ position: relative;
   margin-bottom: 12px;
 
   padding-bottom: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: 0 10px 20px rgba(0,0,0,.10);
-  background: rgba(243,238,230,.92);
+  border-radius: 16px;
+  border: 1px solid rgba(156,123,77,.20);
+  box-shadow: 0 14px 30px rgba(58,51,45,.12), inset 0 1px 0 rgba(255,255,255,.5);
+  background: rgba(245,240,232,.95);
   padding: 10px 14px;
 
   position: relative;
@@ -626,8 +650,10 @@ position: relative;
   margin-top: 6px;
   border-top: 0;
 
-  background: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.34);
   border-radius: 14px;
+  border: 1px solid rgba(156,123,77,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
   padding: 12px 14px;
 }
 .sdmAllRow{
@@ -636,7 +662,7 @@ position: relative;
   gap: 14px;
   align-items:center;
   padding: 10px 0;
-  border-top: 1px solid rgba(0,0,0,.07);
+  border-top: 1px solid rgba(156,123,77,.14);
 }
 .sdmAllRow:first-child{ border-top: 0; }
 
@@ -645,7 +671,7 @@ position: relative;
   font-size: 14px;
   font-weight: 950;
   letter-spacing: -0.2px;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.86);
   margin: 0;
   line-height: 1.25;
   text-align: right;
@@ -657,11 +683,12 @@ position: relative;
   content:"";
   position:absolute;
   right: 0;
-  top: 2px;
+  top: 1px;
   width: 2px;
-  height: 14px;
+  height: 15px;
   border-radius: 2px;
-  background: rgba(90,70,51,.28);
+  background: var(--sdm-brass);
+  opacity:.55;
 }
 .sdmAllItems{
   display:flex;
@@ -672,14 +699,16 @@ position: relative;
 .sdmAllA{
   display:inline-block;
   text-decoration:none;
-  color: rgba(0,0,0,.72);
+  color: rgba(58,51,45,.74);
   font-size: 12.5px;
   font-weight: 550;
   letter-spacing: -0.1px;
   line-height: 1.25;
   padding: 3px 8px;
   border-radius: 10px;
+  border: 1px solid transparent;
   white-space: nowrap;
+  transition: color .12s ease, background .12s ease, border-color .12s ease;
 }
 /* =========================
    ✅ 전체의료서비스 "위첨자 빨간 별" 강조
@@ -709,9 +738,9 @@ position: relative;
 
 .sdmAllA:hover{
   color: var(--sdm-accent);
-  background: rgba(255,255,255,.42);
+  background: rgba(255,255,255,.55);
+  border-color: rgba(156,123,77,.22);
   text-decoration: none;
-  font-weight: 800;
 }
 
 
