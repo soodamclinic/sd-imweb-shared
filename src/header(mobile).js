@@ -67,10 +67,11 @@ function findDozDocOnce(){
     var css = `
 :root{
   --sdm-bg:#F3EEE6;
-  --sdm-text:#141414;
-  --sdm-sub:rgba(0,0,0,.55);
-  --sdm-line:rgba(0,0,0,.10);
-  --sdm-accent:#5A4633;
+  --sdm-text:rgba(58,51,45,.94);
+  --sdm-sub:rgba(58,51,45,.7);
+  --sdm-line:rgba(58,51,45,.10);
+  --sdm-accent:rgba(58,51,45,.92);
+  --sdm-font:'SeoulNamsanJungM','Pretendard',system-ui,-apple-system,'Noto Sans KR',sans-serif;
 
   /* 모바일 */
   --sdm-mH: 56px;
@@ -93,7 +94,7 @@ function findDozDocOnce(){
 
   /* ✅ Badge 톤다운 레드 */
   --sdm-badgeRed:#A35B5B;         /* 너무 진한 빨강 X */
-  --sdm-badgeRedBorder:rgba(0,0,0,.10);
+  --sdm-badgeRedBorder:rgba(58,51,45,.10);
   --sdm-badgeGlow:rgba(163,91,91,.35);
 
   /* ✅ Hot pill 강조 (연한 테두리 + 펄스) */
@@ -132,14 +133,26 @@ function findDozDocOnce(){
   z-index: 999999;
   margin: 0 !important;
   background: transparent;
+  font-family: var(--sdm-font);
 }
 #sdmH, #sdmH *{ box-sizing:border-box; }
 
 .sdmH-bar{
   width:100%;
-  background: var(--sdm-bg);
-  border-bottom: 1px solid var(--sdm-line);
+  background: rgba(247,242,235,.72);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+  backdrop-filter: blur(12px) saturate(125%);
+  border-bottom: 1px solid rgba(58,51,45,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 6px 20px rgba(58,51,45,.05);
+  transition: background .25s ease, box-shadow .25s ease;
 }
+/* ✅ 스크롤 시 글래스 응축 (배경 진해지고 그림자/바 높이 살짝 줄어듦) */
+#sdmH.is-scrolled .sdmH-bar{
+  background: rgba(247,242,235,.88);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 10px 28px rgba(58,51,45,.12);
+}
+.sdmMbar{ transition: height .25s ease; }
+#sdmH.is-scrolled .sdmMbar{ height: 52px; }
 
 /* 모바일 바 */
 .sdmM{ display:block; }
@@ -179,10 +192,17 @@ function findDozDocOnce(){
   height:2px;
   border-radius:2px;
   background: rgba(90,70,51,.88);
+  transform-origin: center;
+  transition: transform .22s cubic-bezier(.4,0,.2,1), opacity .15s ease;
 }
 .sdmM-hamIcon:before{ top:0; }
 .sdmM-hamIcon i{ top:5px; }
 .sdmM-hamIcon:after{ bottom:0; }
+
+/* ✅ 열릴 때 3줄 → X 모핑 */
+#sdmH.sdmM-open .sdmM-hamIcon i{ opacity:0; transform: scaleX(.4); }
+#sdmH.sdmM-open .sdmM-hamIcon:before{ top:5px; transform: rotate(45deg); }
+#sdmH.sdmM-open .sdmM-hamIcon:after{ bottom:5px; transform: rotate(-45deg); }
 
 .sdmM-brand{
   display:flex;
@@ -197,30 +217,58 @@ function findDozDocOnce(){
   flex:0 0 auto;
 }
 .sdmM-logo img{ height:26px; width:auto; display:block; }
+.sdmM-brandText{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  gap:1px;
+  transform: translateY(var(--sdm-mTitleY));
+}
 .sdmM-title{
-  flex:1;
   min-width:0;
   font-size: var(--sdm-mTitleSize);
-  font-weight: var(--sdm-mTitleWeight);
+  font-weight: 900;
   letter-spacing: -0.35px;
-  color: rgba(0,0,0,.88);
+  line-height: 1.1;
+  color: var(--sdm-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transform: translateY(var(--sdm-mTitleY));
-  font-weight: 1400;
-  -webkit-text-stroke: 0.65px rgba(0,0,0,.65);
+}
+/* ✅ 서브 티커: 브랜드명 아래 작은 한 줄, 5초마다 아래→위 롤업 */
+.sdmM-sub{
+  height: 13px;
+  line-height: 13px;
+  overflow: hidden;
+}
+.sdmM-subText{
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  color: rgba(58,51,45,.55);
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+@keyframes sdmSubRoll{
+  0%{ transform: translateY(110%); opacity: 0; }
+  100%{ transform: translateY(0); opacity: 1; }
+}
+.sdmM-subText.rollin{ animation: sdmSubRoll .5s cubic-bezier(.22,.61,.36,1) both; }
+@media (prefers-reduced-motion: reduce){
+  .sdmM-subText.rollin{ animation: none; }
 }
 
 .sdmM-right{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
 .sdmM-pill{
   height: var(--sdm-mBtnH);
-  padding: 0 14px;
+  padding: 0 16px;
   border-radius: var(--sdm-mRadius);
-  border: 1px solid rgba(0,0,0,.12);
-  background: rgba(255,255,255,.55);
-  color: rgba(0,0,0,.85);
-  font-weight: 950;
+  border: 1px solid rgba(58,51,45,.92);
+  background: rgba(58,51,45,.92);
+  color: #fff;
+  font-weight: 800;
   font-size: 12.5px;
   letter-spacing: -.2px;
   text-decoration:none;
@@ -229,8 +277,11 @@ function findDozDocOnce(){
   justify-content:center;
   line-height: 1;
   white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 4px 14px rgba(58,51,45,.22);
+  transition: transform .12s ease, box-shadow .2s ease;
 }
-.sdmMDiv{ width:100%; height:1px; background: rgba(0,0,0,.10); }
+.sdmM-pill:active{ transform: translateY(1px) scale(.98); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 2px 8px rgba(58,51,45,.18); }
+.sdmMDiv{ width:100%; height:1px; background: rgba(58,51,45,.10); }
 
 /* Notice */
 .sdmNoticeBadge{
@@ -282,7 +333,7 @@ function findDozDocOnce(){
 .sdmMOverlay{
   position:fixed;
   inset:0;
-  background: rgba(0,0,0,.34);
+  background: rgba(58,51,45,.34);
   opacity:0;
   pointer-events:none;
   transition: opacity .18s ease;
@@ -293,15 +344,29 @@ function findDozDocOnce(){
   top:0; left:0;
   height:100dvh;
   width: var(--sdm-drawerW);
-  background: rgba(243,238,230,.98);
-  border-right: 1px solid rgba(0,0,0,.10);
-  box-shadow: 18px 0 40px rgba(0,0,0,.20);
+  background: rgba(247,242,235,.94);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-right: 1px solid rgba(58,51,45,.10);
+  box-shadow: 18px 0 40px rgba(58,51,45,.20);
   transform: translateX(-105%);
   transition: transform .22s ease;
   z-index: 1000001;
   display:flex;
   flex-direction:column;
+  overflow: hidden;
 }
+/* ✅ 자화상 워터마크 — 갤러리 입구 결 (아주 살짝만 비침) */
+.sdmMDrawer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url('https://cdn.imweb.me/upload/S20250626bc7495188971b/35a22e4230dab.jpg') center/cover no-repeat;
+  opacity:.05;
+  pointer-events:none;
+  z-index:0;
+}
+.sdmMDrawerBody{ position:relative; z-index:1; }
 #sdmH.sdmM-open .sdmMOverlay{ opacity:1; pointer-events:auto; }
 #sdmH.sdmM-open .sdmMDrawer{ transform: translateX(0); }
 
@@ -311,8 +376,10 @@ function findDozDocOnce(){
   top: 0;
   z-index: 5;
   padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(0,0,0,.08);
-  background: rgba(243,238,230,.98);
+  border-bottom: 1px solid rgba(58,51,45,.08);
+  background: rgba(247,242,235,.86);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
   display:block;
 }
 .sdmMDrawerTopRow{
@@ -332,7 +399,7 @@ function findDozDocOnce(){
   width: 36px;
   height: 34px;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
 }
@@ -343,7 +410,7 @@ function findDozDocOnce(){
   font-weight:900;
   line-height:32px;
   text-align:center;
-  color: rgba(0,0,0,.68);
+  color: rgba(58,51,45,.68);
 }
 
 #sdmMAllInTop{
@@ -364,17 +431,16 @@ function findDozDocOnce(){
 
 /* Quick line */
 .sdmMQuickTop{ margin: 6px 0 10px; }
-.sdmMQuickHr{ height:1px; background: rgba(0,0,0,.10); margin: 8px 0 0; }
+.sdmMQuickHr{ height:1px; background: rgba(58,51,45,.10); margin: 8px 0 0; }
 .sdmMQuickTitle{
   font-size: 12.5px;
   font-weight: 800;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
 }
 .sdmMQuickTitle b{
-  font-weight: 1400;
-  color: rgba(0,0,0,.92);
-  -webkit-text-stroke: 0.65px rgba(0,0,0,.65);
+  font-weight: 900;
+  color: rgba(58,51,45,.92);
 }
 
 /* 3 picks */
@@ -387,10 +453,10 @@ function findDozDocOnce(){
 .sdmM3Pick a{
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.40);
   text-decoration:none;
-  color: rgba(0,0,0,.84);
+  color: rgba(58,51,45,.84);
   font-weight: 950;
   font-size: 13px;
   display:flex;
@@ -410,7 +476,7 @@ function findDozDocOnce(){
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.sdmM3Pick a .chev{ color: rgba(0,0,0,.45); font-weight: 900; }
+.sdmM3Pick a .chev{ color: rgba(58,51,45,.45); font-weight: 900; }
 
 /* ✅ (REQ 2) 배지: 그림자 느낌 제거 + 은은한 글로우만 */
 .sdmMTag{
@@ -447,8 +513,8 @@ text-shadow: none !important;
   padding-top: 1px;
 }
 /* accordion */
-.sdmMAcc{ border-top: 1px solid rgba(0,0,0,.08); padding-top:10px; }
-.sdmMAccItem{ border-bottom: 1px solid rgba(0,0,0,.07); padding: 8px 0; }
+.sdmMAcc{ border-top: 1px solid rgba(58,51,45,.08); padding-top:10px; }
+.sdmMAccItem{ border-bottom: 1px solid rgba(58,51,45,.07); padding: 8px 0; }
 .sdmMAccBtn{
   width:100%;
   border:0;
@@ -461,10 +527,9 @@ text-shadow: none !important;
 }
 .sdmMAccBtn span{
   font-size: 15px;
-font-weight: 950;
--webkit-text-stroke: 0.55px rgba(0,0,0,.55); /* ✅ 체감 두께 강화 */
+  font-weight: 800;
   letter-spacing: -.2px;
-  color: rgba(0,0,0,.84);
+  color: var(--sdm-text);
 }
 .sdmMAccBtn i{
   width:22px; height:22px;
@@ -472,7 +537,7 @@ font-weight: 950;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  color: rgba(0,0,0,.55);
+  color: rgba(58,51,45,.55);
   font-style: normal;
   font-weight: 900;
 }
@@ -496,7 +561,7 @@ font-weight: 950;
 }
 .sdmMAccList a{
   text-decoration:none;
-  color: rgba(0,0,0,.72);
+  color: rgba(58,51,45,.72);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.50;
@@ -509,11 +574,11 @@ font-weight: 950;
   width: 100%;
   height: 42px;
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   background: rgba(255,255,255,.55);
   cursor:pointer;
   font-weight: 950;
-  color: rgba(0,0,0,.80);
+  color: rgba(58,51,45,.80);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -536,17 +601,16 @@ font-weight: 950;
   opacity: 1;
   transform: translateY(0);
   margin-top: 6px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(58,51,45,.08);
   padding: 10px 10px;
 }
 
-.sdmMAllRow{ padding: 10px 4px; border-top: 1px solid rgba(0,0,0,.06); }
+.sdmMAllRow{ padding: 10px 4px; border-top: 1px solid rgba(58,51,45,.06); }
 .sdmMAllRow:first-child{ border-top:0; }
 .sdmMAllTitle{
   font-size: 14px;
-font-weight: 950;
--webkit-text-stroke: 0.55px rgba(0,0,0,.55); /* 체감 두께 업 */
-  color: rgba(0,0,0,.82);
+  font-weight: 800;
+  color: rgba(58,51,45,.82);
   margin-bottom: 12px;
 }
 .sdmMAllItems{ display:flex; flex-wrap:wrap; gap: 8px 10px; }
@@ -554,18 +618,18 @@ font-weight: 950;
   font-size: 11.5px;
   font-weight: 650;
   text-decoration:none;
-  color: rgba(0,0,0,.70);
+  color: rgba(58,51,45,.70);
   background: rgba(255,255,255,.42);
-  border: 1px solid rgba(0,0,0,.06);
+  border: 1px solid rgba(58,51,45,.06);
   border-radius: 999px;
   padding: 5px 10px;
 }
 
 /* ✅ (REQ 3) Hot pill: 레이아웃 안 흔들리게 "가짜 두께"만 펄스 */
 @keyframes sdmHotPulseShadow{
-  0%   { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(58,51,45,0); }
   50%  { box-shadow: 0 0 0 3px var(--sdm-hotGlow2); }
-  100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(58,51,45,0); }
 }
 
 .sdmMAllItems a.sdm-pillHot{
@@ -581,18 +645,26 @@ font-weight: 950;
 }
 
 #sdmH.sdmM-allopen #sdmMAllToggle{ display:none; }
-#sdmMQuickCost{ margin-top: 10px; }
+/* ✅ 드로어 기본 CTA — 바 알약과 동일 다크 채움 */
+#sdmMQuickCost{
+  margin-top: 10px;
+  background: rgba(58,51,45,.92);
+  border: 1px solid rgba(58,51,45,.92);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 18px rgba(58,51,45,.22);
+}
+#sdmMQuickCost:active{ transform: translateY(1px) scale(.99); }
 
 /* Drawer footer */
 .sdmMFooter{
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid rgba(0,0,0,.10);
-  color: rgba(0,0,0,.55);
+  border-top: 1px solid rgba(58,51,45,.10);
+  color: rgba(58,51,45,.55);
   font-size: 11.5px;
   line-height: 1.55;
 }
-.sdmMFooter strong{ color: rgba(0,0,0,.70); font-weight: 900; }
+.sdmMFooter strong{ color: rgba(58,51,45,.70); font-weight: 900; }
 .sdmMFooterTop{
   display:flex;
   align-items:center;
@@ -600,27 +672,21 @@ font-weight: 950;
   flex-wrap:wrap;
   margin-bottom: 10px;
 }
-.sdmMFooterTop .dim{ color: rgba(0,0,0,.45); }
+.sdmMFooterTop .dim{ color: rgba(58,51,45,.45); }
 .sdmMFooterGrid{
   display:grid;
   grid-template-columns: 92px 1fr;
   row-gap: 6px;
   column-gap: 10px;
 }
-.sdmMFooterK{ color: rgba(0,0,0,.48); }
-.sdmMFooterV{ color: rgba(0,0,0,.66); font-weight: 800; }
+.sdmMFooterK{ color: rgba(58,51,45,.48); }
+.sdmMFooterV{ color: rgba(58,51,45,.66); font-weight: 800; }
 .sdmMFooterCopy{
   margin-top: 10px;
   font-size: 11px;
-  color: rgba(0,0,0,.40);
+  color: rgba(58,51,45,.40);
 }
 
-/* Title text in */
-@keyframes sdmTextIn{
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.sdm-textin{ animation: sdmTextIn 650ms ease both; }
 @media (prefers-reduced-motion: reduce){
   .sdmMAllItems a.sdm-pillHot{ animation: none !important; }
 }`;
@@ -650,7 +716,10 @@ font-weight: 950;
             <a class="sdmM-logo" href="/" aria-label="여의도 수담의원">
               <img src="https://cdn.imweb.me/upload/S20250626bc7495188971b/33f5d0e079c72.png" alt="여의도 수담의원" />
             </a>
-            <div class="sdmM-title" id="sdmMTitleText">여의도 수담의원</div>
+            <div class="sdmM-brandText">
+              <div class="sdmM-title" id="sdmMTitleText">여의도 수담의원</div>
+              <div class="sdmM-sub" aria-live="polite"><span class="sdmM-subText" id="sdmMSubText">아름다울 일상을 진료합니다</span></div>
+            </div>
           </div>
         </div>
 
@@ -892,7 +961,7 @@ font-weight: 950;
 
       var mDrawerBody = doc.getElementById('sdmMDrawerBody');
 
-      var mTitleEl = doc.getElementById('sdmMTitleText');
+      var mSubEl = doc.getElementById('sdmMSubText');
       var mNoticeEl = doc.getElementById('sdmMNoticeText');
 
       var mOpen = false;
@@ -940,6 +1009,15 @@ font-weight: 950;
 
       win.addEventListener('scroll', hardSyncBodyOffset, { passive:true });
       win.addEventListener('orientationchange', function(){ setTimeout(hardSyncBodyOffset, 150); });
+
+      /* ✅ 스크롤 응축: 8px 넘게 내리면 글래스 진해지고 바 살짝 줄어듦 */
+      function syncScrolledClass(){
+        var y = win.scrollY || doc.documentElement.scrollTop || 0;
+        if (y > 8) H.classList.add('is-scrolled');
+        else H.classList.remove('is-scrolled');
+      }
+      win.addEventListener('scroll', syncScrolledClass, { passive:true });
+      syncScrolledClass();
 
       if (win.visualViewport){
         win.visualViewport.addEventListener('resize', hardSyncBodyOffset);
@@ -1259,31 +1337,31 @@ font-weight: 950;
         }, 140);
       }
 
-      /* Title Rotator */
-      var TITLE_ITEMS = [
-        '여의도 수담의원',
+      /* ✅ 서브 티커 — 브랜드명(타이틀)은 고정, 아래 한 줄만 롤업 */
+      var SUB_ITEMS = [
         '아름다울 일상을 진료합니다',
         '가정의학과 전문의 진료',
-        '젊음유지 클리닉'
+        '젊음유지 · 혈당 · 피부 클리닉',
+        '여의도, 당신 곁의 주치의'
       ];
-      var titleIdx = 0;
+      var subIdx = 0;
 
-      function setTitleText(nextText){
-        if (!mTitleEl) return;
-        mTitleEl.classList.remove('sdm-textin');
-        void mTitleEl.offsetWidth;
-        mTitleEl.textContent = nextText;
+      function setSubText(nextText){
+        if (!mSubEl) return;
+        mSubEl.classList.remove('rollin');
+        void mSubEl.offsetWidth;
+        mSubEl.textContent = nextText;
         requestAnimationFrame(function(){
-          mTitleEl.classList.add('sdm-textin');
+          mSubEl.classList.add('rollin');
         });
       }
-      setTitleText(TITLE_ITEMS[0]);
+      setSubText(SUB_ITEMS[0]);
 
-      if (!win.__SDM_MOBILE_TITLE_TIMER__){
-        win.__SDM_MOBILE_TITLE_TIMER__ = win.setInterval(function(){
-          titleIdx = (titleIdx + 1) % TITLE_ITEMS.length;
-          setTitleText(TITLE_ITEMS[titleIdx]);
-        }, 3000);
+      if (!win.__SDM_MOBILE_SUB_TIMER__){
+        win.__SDM_MOBILE_SUB_TIMER__ = win.setInterval(function(){
+          subIdx = (subIdx + 1) % SUB_ITEMS.length;
+          setSubText(SUB_ITEMS[subIdx]);
+        }, 5000);
       }
 
       // INIT
